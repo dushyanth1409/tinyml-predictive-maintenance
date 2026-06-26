@@ -7,3 +7,6 @@ models/saved/features.csv
 models/saved/labels.npy
 .DS_Store
 *.egg-info/
+models/saved/*.keras
+models/saved/*.tflite
+models/saved/nn_metadata.json
