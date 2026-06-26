@@ -1,0 +1,5 @@
+model,accuracy,precision,recall,f1,train_time_s
+RandomForest,1.0,1.0,1.0,1.0,1.02
+SVM,1.0,1.0,1.0,1.0,0.04
+LightGBM,1.0,1.0,1.0,1.0,0.41
+XGBoost,0.9975,0.9976,0.9975,0.9975,0.5

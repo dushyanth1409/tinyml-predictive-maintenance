@@ -1,0 +1,33 @@
+{
+  "best_model": "RandomForest",
+  "feature_names": [
+    "rms",
+    "mean",
+    "variance",
+    "std_dev",
+    "kurtosis",
+    "skewness",
+    "peak",
+    "peak_to_peak",
+    "crest_factor",
+    "shape_factor",
+    "impulse_factor",
+    "dominant_freq",
+    "spectral_centroid",
+    "spectral_spread",
+    "band_energy_0_1k",
+    "band_energy_1_3k",
+    "band_energy_3_6k",
+    "fft_peak_1",
+    "fft_peak_2",
+    "fft_peak_3",
+    "spectral_entropy",
+    "spectral_flatness"
+  ],
+  "classes": [
+    "Healthy",
+    "Inner Race",
+    "Outer Race",
+    "Ball"
+  ]
+}

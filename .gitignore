@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+models/saved/*.pkl
+models/saved/features.csv
+models/saved/labels.npy
+.DS_Store
+*.egg-info/
