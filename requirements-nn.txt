@@ -1,0 +1,7 @@
+# Extra dependencies for the neural-network / TFLM path.
+# The base pipeline (RF/XGB/LightGBM/SVM) does not need TensorFlow, so this is
+# kept separate from requirements.txt.
+#
+#   pip install -r requirements-nn.txt
+#
+tensorflow>=2.15,<2.20

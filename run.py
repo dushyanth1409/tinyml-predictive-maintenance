@@ -8,6 +8,7 @@ Usage:
     python run.py --skip-train       # skip training, use saved models
     python run.py --simulate         # run inference demo after training
     python run.py --samples 300      # samples per class
+    python run.py --nn               # also train NN + export int8 TFLM model
 """
 
 import argparse
@@ -74,6 +75,23 @@ def main(args):
         y = np.load(os.path.join(MODELS_DIR, "labels.npy"))
         compare_all(MODELS_DIR, X, y)
 
+    # ── Neural network + TFLM export ─────────────────────────────────
+    # Heavy imports (TensorFlow, scikit-learn) live inside this block so a
+    # plain `python run.py` never pays for them. train_nn reuses the cached
+    # features.csv/labels.npy written above (it regenerates only if absent),
+    # so the NN trains on the same data as the tree models.
+    if args.nn:
+        print("\n[NN]  Training neural network + exporting int8 TFLM model...")
+        from types import SimpleNamespace
+        from src.models import train_nn, export_tflm
+
+        train_nn.main(SimpleNamespace(
+            samples=args.samples,
+            epochs=args.nn_epochs,
+            regenerate=False,
+        ))
+        export_tflm.main()
+
     # ── 5. Inference demo ────────────────────────────────────────────
     if args.simulate:
         print("\n[5/5] Running inference simulation...")
@@ -93,6 +111,8 @@ def main(args):
 
     print("\n✅  Pipeline complete.")
     print(f"    Models saved to: {MODELS_DIR}/")
+    if args.nn:
+        print(f"    NN + TFLM:       {MODELS_DIR}/nn_int8.tflite  →  firmware/tflm/")
     print(f"    Run dashboard:   python src/dashboard/monitor.py")
     print(f"    Run inference:   python src/inference/inference.py --simulate")
 
@@ -103,4 +123,7 @@ if __name__ == "__main__":
     p.add_argument("--skip-train",  action="store_true")
     p.add_argument("--simulate",    action="store_true")
     p.add_argument("--no-plot",     action="store_true")
+    p.add_argument("--nn",          action="store_true",
+                   help="also train a neural network and export an int8 TFLM model")
+    p.add_argument("--nn-epochs",   type=int,  default=150)
     main(p.parse_args())
